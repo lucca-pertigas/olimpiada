@@ -5,6 +5,10 @@ public class Prova {
 	private long id;
 	private String titulo;
 
+	public Prova(String titulo) {
+		setTitulo(titulo);	
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -18,7 +22,14 @@ public class Prova {
 	}
 
 	public void setTitulo(String titulo) {
-		this.titulo = titulo;
+		if (titulo == null || titulo.isBlank()) {
+			throw new IllegalArgumentException("Titulo da prova é obrigatorio");
+		}
+		this.titulo = titulo.trim();
+	}
+	@Override
+	public String toString() {
+		return id + " - " + titulo;
 	}
 
 }
