@@ -1,9 +1,15 @@
 package br.com.ucsal.olimpiadas.model;
 
 public class Participante {
-	private long id;
+	private Long id;
 	private String nome;
 	private String email;
+	
+	public Participante(Long id, String nome, String email) {
+		this.id = id;
+		setNome(nome);
+		setEmail(email);
+	}
 
 	public long getId() {
 		return id;
@@ -18,7 +24,10 @@ public class Participante {
 	}
 
 	public void setNome(String nome) {
-		this.nome = nome;
+		if (nome == null || nome.isBlank()) {
+			throw new IllegalArgumentException("Nome do participante e obrigatorio");
+		}
+		this.nome = nome.trim();
 	}
 
 	public String getEmail() {
@@ -26,6 +35,26 @@ public class Participante {
 	}
 
 	public void setEmail(String email) {
-		this.email = email;
+		if (email == null || email.isBlank()) {
+			this.email = null;
+			return;
+		}
+		
+		if (!email.contains("@")) {
+			throw new IllegalArgumentException("Email invalido");
+		}
+		
+		this.email = email.trim();
+		
 	}
+	
+	public boolean temEmail() {
+		return email != null;
+	}
+	
+	@Override
+	public String toString() {
+		return id + " - " + nome + " - " + email;
+	}
+	
 }
