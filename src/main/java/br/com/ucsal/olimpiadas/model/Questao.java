@@ -4,8 +4,8 @@ import java.util.Arrays;
 
 public class Questao {
 
-	private long id;
-	private long provaId;
+	private Long id;
+	private Long provaId;
 
 	private String enunciado;
 	private String[] alternativas = new String[5];
@@ -33,7 +33,10 @@ public class Questao {
 		return provaId;
 	}
 
-	public void setProvaId(long provaId) {
+	public void setProvaId(Long provaId) {
+		if (provaId == null) {
+			throw new IllegalArgumentException ("Prova é obrigatoria");
+		}
 		this.provaId = provaId;
 	}
 
@@ -52,6 +55,11 @@ public class Questao {
 	public void setAlternativas(String[] alternativas) {
 		if (alternativas == null || alternativas.length != 5) {
 			throw new IllegalArgumentException("A questão deve possuir exatamente 5 alternativas.");
+		}
+		for (String alt : alternativas) {
+			if (alt == null || alt.isBlank()) {
+				throw new IllegalArgumentException("Alternativas invalidadas");
+			}
 		}
 		this.alternativas = Arrays.copyOf(alternativas, 5);
 	}
